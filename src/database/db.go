@@ -10,18 +10,19 @@ import (
 )
 
 func GetDB() *gorm.DB {
-	config, err := config.GetConfig()
+	conf, err := config.GetConfig()
 	if err != nil {
-		logrus.Println("get config err")
-		return nil
+		logrus.WithError(err).Println("get config err")
+		panic(err)
 	}
-	instance, err := gorm.Open("postgres", connStr(config))
+	instance, err := gorm.Open("postgres", connStr(conf))
 	if err != nil {
-		return nil
+		logrus.WithError(err).WithField("conn str", connStr(conf)).Println("get database err")
+		panic(err)
 	}
 	instance.DB().SetConnMaxLifetime(time.Minute * 5)
 	instance.DB().SetMaxIdleConns(10)
-	instance.DB().SetMaxOpenConns(config.Database.PoolSize)
+	instance.DB().SetMaxOpenConns(conf.Database.PoolSize)
 	instance.LogMode(true)
 	return instance
 }

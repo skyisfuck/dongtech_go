@@ -18,6 +18,7 @@ func startWeb(config *config.Config) {
 	//html
 	router.LoadHTMLGlob("../templates/*")
 
+	//normal
 	router.GET("/version", handler.Version)
 	router.GET("/config", handler.PrintConfig)
 	router.GET("/getUser/:id", handler.GetUser)
@@ -30,7 +31,20 @@ func startWeb(config *config.Config) {
 	router.GET("/refresh/:token", handler.Refresh)
 	router.GET("/sayHello/:token", handler.SayHello)
 
+	//captcha
+	router.GET("/captcha", handler.GetCaptcha)
+	router.GET("/captcha/:captchaId", handler.GetCaptchaImg)
+	router.GET("/verifyCaptcha/:captchaId/:value", handler.VerifyCaptcha)
+
+	//csv
+	router.GET("/upload", handler.UploadFile)
+	router.GET("/download/read", handler.DownloadReadFile)
+	router.GET("/download/write", handler.DownloadWriteFile)
+
+	//grpc
 	router.GET("/grpc", Grpc(fmt.Sprintf(":%s", config.Grpc.Addr)))
+
+	//run web
 	err := router.Run(fmt.Sprintf(":%s", config.Web.Addr))
 	if err != nil {
 		logrus.WithError(err).Println("web start failed")

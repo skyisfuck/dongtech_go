@@ -1,57 +1,95 @@
 package config
 
 import (
+	"dongtech_go/util"
+	"encoding/json"
 	"github.com/BurntSushi/toml"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 const (
-	config_file_address = `../resources/config.toml` //go build正式环境用
-	//config_file_address = `resources/config.toml` //goland本地启动用
-	config_file = `config`
+	ConfigFileAddress = `../resources/config.toml` //go build正式环境用
+	//ConfigFileAddress = `resources/config.toml` //goland本地启动用
+	ConfigFileKey = `configFile`
+	ConfigKey     = `config`
 )
 
 func init() {
-	viper.SetDefault(config_file, config_file_address)
+	viper.SetDefault(ConfigFileKey, ConfigFileAddress)
+
+	err := configInit()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func configInit() error {
+	configFilePath := viper.GetString(ConfigFileKey)
+	var conf Config
+	if _, err := toml.DecodeFile(configFilePath, &conf); err != nil {
+		return err
+	}
+	configStr, err := util.ToJsonString(conf)
+	if err != nil {
+		logrus.WithError(err).Println("config init error")
+		return err
+	}
+	viper.SetDefault(ConfigKey, configStr)
+	return nil
 }
 
 func GetConfig() (*Config, error) {
-	configFilePath := viper.GetString(config_file)
-	var conf Config
-	if _, err := toml.DecodeFile(configFilePath, &conf); err != nil {
-		logrus.WithError(err).Println("get config err")
+	configStr := viper.GetString(ConfigKey)
+	config, err := toConfig(configStr)
+	if err != nil {
+		logrus.Println("get config err")
 		return nil, err
 	}
-	return &conf, nil
+	return config, nil
+}
+
+func toConfig(str string) (*Config, error) {
+	var config Config
+	err := json.Unmarshal([]byte(str), &config)
+	return &config, errors.WithStack(err)
 }
 
 type Config struct {
-	Base     Base
-	Database Database
-	Grpc     Grpc
-	Web      Web
+	Base     *Base     `json:"base"`
+	Database *Database `json:"database"`
+	Grpc     *Grpc     `json:"grpc"`
+	Web      *Web      `json:"web"`
+	Email    *Email    `json:"email"`
 }
 
 type Base struct {
-	Author string
-	Age    int
+	Author string `json:"author"`
+	Age    int    `json:"age"`
 }
 
 type Database struct {
-	User     string
-	Password string
-	Addr     string
-	Database string
-	PoolSize int
-	Slow     int
-	Port     int
+	User     string `json:"user"`
+	Password string `json:"password"`
+	Addr     string `json:"addr"`
+	Database string `json:"database"`
+	PoolSize int    `json:"pool_size"`
+	Slow     int    `json:"slow"`
+	Port     int    `json:"port"`
 }
 
 type Grpc struct {
-	Addr string
+	Addr string `json:"addr"`
 }
 
 type Web struct {
-	Addr string
+	Addr string `json:"addr"`
+}
+
+type Email struct {
+	Host     string `json:"host"`
+	Port     int    `json:"port"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }

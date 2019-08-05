@@ -11,7 +11,11 @@ postgres、
 gorm、
 pg、
 uuid、
-jwt-go
+jwt、
+set、
+captcha、
+email、
+csv
 ......
 
 ****1.设置proxy****
@@ -52,13 +56,23 @@ go get github.com/satori/go.uuid
 
 go get github.com/dgrijalva/jwt-go
 
+go get github.com/deckarep/golang-set
+
+go get github.com/dchest/captcha
+
+go get github.com/go-gomail/gomail
+
 ****3.问题****
 
-ambiguous import: found github.com/ugorji/go/codec in multiple modules
+1.ambiguous import: found github.com/ugorji/go/codec in multiple modules
 
 解决：
 
 go get github.com/ugorji/go@v1.1.2
+
+2.生成 pb.go
+  
+命令行执行:protoc --go_out=plugins=grpc:. ServeRoute.proto
 
 ****4.运行****
 

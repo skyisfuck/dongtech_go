@@ -17,3 +17,9 @@ addr = "10086"
 
 [web]
 addr = "9090"
+
+[email]
+host = "smtp.exmail.qq.com"
+port = 465
+username = "9312085@qq.com"
+password = "xxxxxx"

@@ -3,15 +3,13 @@ package cmd
 import (
 	"context"
 	pb "dongtech_go/proto"
+	"dongtech_go/util"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 	"log"
 	"net/http"
 	"time"
 )
-
-const dateFormat = "2006-01-02 15:04:05"
-const dateTimeFormat = "20060102150405"
 
 func Grpc(addr string) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -33,13 +31,13 @@ func Grpc(addr string) gin.HandlerFunc {
 			log.Fatalln(err)
 		}
 		log.Println("message from serve: ", res2.Name)
-		c.String(http.StatusOK, "get grpc success,serve1:"+timeFormat(res1.Time, dateFormat))
+		c.String(http.StatusOK, "get grpc success,serve1:"+timeFormat(res1.Time, util.DateFormat))
 	}
 }
 
 func timeFormat(timeStamp int64, format ...string) string {
 	t := time.Unix(timeStamp/1e3, 0)
-	defaultFormat := dateTimeFormat
+	defaultFormat := util.DateFormat
 	if len(format) > 0 {
 		defaultFormat = format[0]
 	}
