@@ -3,6 +3,7 @@ package cmd
 import (
 	"dongtech_go/config"
 	"dongtech_go/handler"
+	"dongtech_go/util"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -49,6 +50,6 @@ func startWeb(config *config.Config) {
 	if err != nil {
 		logrus.WithError(err).Println("web start failed")
 		log.Fatalln(err)
-		panic(err)
+		util.Catch(err)
 	}
 }

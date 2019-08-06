@@ -22,7 +22,7 @@ func Algorithm(a int) string {
 	return "概率错误"
 }
 
-func test() {
+func testAlgorithm() {
 	//100万次算法运行
 	for a := 0; a < 1000000; a++ {
 		fmt.Println(Algorithm(a))

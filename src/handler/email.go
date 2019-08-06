@@ -2,6 +2,7 @@ package handler
 
 import (
 	"dongtech_go/config"
+	"dongtech_go/util"
 	"github.com/go-gomail/gomail"
 	"github.com/sirupsen/logrus"
 )
@@ -38,7 +39,7 @@ func SendEmail(from string, to string, cc string, subject string, body string, a
 		// Send the email to Bob, Cora and Dan.
 		if err = d.DialAndSend(m); err != nil {
 			logrus.WithError(err).WithField("email", config.Email).Println("send email err")
-			panic(err)
+			util.Catch(err)
 		}
 	} else {
 		logrus.Println("get email config err")

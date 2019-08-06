@@ -21,7 +21,7 @@ func init() {
 
 	err := configInit()
 	if err != nil {
-		panic(err)
+		util.Catch(err)
 	}
 }
 
@@ -44,7 +44,6 @@ func GetConfig() (*Config, error) {
 	configStr := viper.GetString(ConfigKey)
 	config, err := toConfig(configStr)
 	if err != nil {
-		logrus.Println("get config err")
 		return nil, err
 	}
 	return config, nil

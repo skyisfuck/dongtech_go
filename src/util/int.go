@@ -2,8 +2,8 @@ package util
 
 import mapset "github.com/deckarep/golang-set"
 
-//合并两个数组并去重
-func MergeDuplicateInt(slice []int, elems []int) []int {
+//合并去重数组
+func MergeDuplicateIntArray(slice []int, elems []int) []int {
 	listPId := append(slice, elems...)
 	t := mapset.NewSet()
 	for _, i := range listPId {
@@ -17,7 +17,7 @@ func MergeDuplicateInt(slice []int, elems []int) []int {
 }
 
 //数组取出不同元素 放入结果 sourceList中的元素不在sourceList2中 则取到result中
-func GetDifferentInt(sourceList, sourceList2 []int) (result []int) {
+func GetDifferentIntArray(sourceList, sourceList2 []int) (result []int) {
 	for _, src := range sourceList {
 		var find bool
 		for _, target := range sourceList2 {
@@ -34,7 +34,7 @@ func GetDifferentInt(sourceList, sourceList2 []int) (result []int) {
 }
 
 //int 数组转换成interface
-func IntToInterface(src []int) []interface{} {
+func IntArrayToInterface(src []int) []interface{} {
 	result := []interface{}{}
 	for _, v := range src {
 		result = append(result, v)
@@ -43,7 +43,7 @@ func IntToInterface(src []int) []interface{} {
 }
 
 //int 数组去重
-func DuplicateInt(data []int) []int {
+func DuplicateIntArray(data []int) []int {
 	m := map[int]string{}
 
 	for _, d := range data {

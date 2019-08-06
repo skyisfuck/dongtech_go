@@ -2,6 +2,7 @@ package database
 
 import (
 	"dongtech_go/config"
+	"dongtech_go/util"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -13,12 +14,12 @@ func GetDB() *gorm.DB {
 	conf, err := config.GetConfig()
 	if err != nil {
 		logrus.WithError(err).Println("get config err")
-		panic(err)
+		util.Catch(err)
 	}
 	instance, err := gorm.Open("postgres", connStr(conf))
 	if err != nil {
 		logrus.WithError(err).WithField("conn str", connStr(conf)).Println("get database err")
-		panic(err)
+		util.Catch(err)
 	}
 	instance.DB().SetConnMaxLifetime(time.Minute * 5)
 	instance.DB().SetMaxIdleConns(10)

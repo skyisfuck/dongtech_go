@@ -16,7 +16,7 @@ func testCreateImg() {
 	createAddress := "/Users/dong/Desktop/3.jpg"
 	err := CreateImg(fileAddress1, fileAddress2, createAddress)
 	if err != nil {
-		logrus.Println("create img error")
+		logrus.WithError(err).Println("create img error")
 	}
 }
 

@@ -3,7 +3,7 @@ package util
 import mapset "github.com/deckarep/golang-set"
 
 //数组取出不同元素 放入结果 sourceList中的元素不在sourceList2中 则取到result中
-func GetDifferentString(sourceList, sourceList2 []string) (result []string) {
+func GetDifferentStrArray(sourceList, sourceList2 []string) (result []string) {
 	for _, src := range sourceList {
 		var find bool
 		for _, target := range sourceList2 {
@@ -20,7 +20,7 @@ func GetDifferentString(sourceList, sourceList2 []string) (result []string) {
 }
 
 //合并两个字符串数组并去重
-func MergeDuplicateString(slice []string, elems []string) []string {
+func MergeDuplicateStrArray(slice []string, elems []string) []string {
 	listPId := append(slice, elems...)
 	t := mapset.NewSet()
 	for _, i := range listPId {
@@ -34,7 +34,7 @@ func MergeDuplicateString(slice []string, elems []string) []string {
 }
 
 //string 数组转换成interface
-func StrToInterface(src []string) []interface{} {
+func StrArrayToInterface(src []string) []interface{} {
 	result := []interface{}{}
 	for _, v := range src {
 		result = append(result, v)
@@ -43,7 +43,7 @@ func StrToInterface(src []string) []interface{} {
 }
 
 //string 数组去重
-func DuplicateString(data []string) []string {
+func DuplicateStrArray(data []string) []string {
 	m := map[string]string{}
 
 	for _, d := range data {
@@ -58,7 +58,7 @@ func DuplicateString(data []string) []string {
 }
 
 //string array 存在
-func ExistString(s []string, e string) bool {
+func ExistStr(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
 			return true

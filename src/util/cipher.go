@@ -27,7 +27,7 @@ func Sha1(b []byte) []byte {
 	return h.Sum(nil)
 }
 
-func GetMd5String(salt string) func(string) string {
+func GetMd5Str(salt string) func(string) string {
 	return func(s string) string {
 		h := md5.New()
 		io.WriteString(h, s)
@@ -36,7 +36,7 @@ func GetMd5String(salt string) func(string) string {
 	}
 }
 
-func GetSha1String(salt string) func(string) string {
+func GetSha1Str(salt string) func(string) string {
 	return func(s string) string {
 		h := sha1.New()
 		io.WriteString(h, s)
@@ -45,7 +45,7 @@ func GetSha1String(salt string) func(string) string {
 	}
 }
 
-func GetSha256String(salt string) func(string) string {
+func GetSha256Str(salt string) func(string) string {
 	return func(s string) string {
 		h := sha256.New()
 		io.WriteString(h, s)
@@ -54,7 +54,7 @@ func GetSha256String(salt string) func(string) string {
 	}
 }
 
-func GetHmacSha256String(s string, key string) string {
+func GetHmacSha256Str(s string, key string) string {
 	h := hmac.New(sha256.New, []byte(key))
 	io.WriteString(h, s)
 	return hex.EncodeToString(h.Sum(nil))

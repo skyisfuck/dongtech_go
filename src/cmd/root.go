@@ -3,6 +3,7 @@ package cmd
 import (
 	"dongtech_go/config"
 	"dongtech_go/proto"
+	"dongtech_go/util"
 	"fmt"
 	"github.com/robfig/cron"
 	"github.com/sirupsen/logrus"
@@ -28,7 +29,8 @@ var rootCmd = &cobra.Command{
 
 		config, err := config.GetConfig()
 		if err != nil {
-			panic(err)
+			logrus.WithError(err).Println("get config err")
+			util.Catch(err)
 		}
 
 		//启动 grpc

@@ -27,7 +27,7 @@ func GetUser(c *gin.Context) {
 	err = db.Table("users").Where("id = ?", id).Scan(&User).Error
 	if err != nil {
 		logrus.WithError(err).WithField("userId", id).Println("get err")
-		panic(err)
+		util.Catch(err)
 	}
 	c.JSON(http.StatusOK, User)
 }
@@ -49,7 +49,7 @@ func PrintConfig(c *gin.Context) {
 	config, err := config.GetConfig()
 	if err != nil {
 		logrus.WithError(err).Println("get config err")
-		panic(err)
+		util.Catch(err)
 	}
 	c.String(http.StatusOK, fmt.Sprintf("%s,%d", config.Base.Author, config.Base.Age))
 }
