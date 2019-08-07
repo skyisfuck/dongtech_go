@@ -19,7 +19,8 @@ addr = "10086"
 addr = "9090"
 
 [email]
-host = "smtp.exmail.qq.com"
+host = "smtp.sina.com"
 port = 465
-username = "9312085@qq.com"
-password = "xxxxxx"
+username = "zld126126@sina.com"
+#从sina获取的密钥
+password = "1234567890abcdef"
