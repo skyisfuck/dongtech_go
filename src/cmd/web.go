@@ -45,6 +45,9 @@ func startWeb(config *config.Config) {
 	//grpc
 	router.GET("/grpc", Grpc(fmt.Sprintf(":%s", config.Grpc.Addr)))
 
+	//email
+	router.GET("/sendEmail", handler.SendEmail)
+
 	//run web
 	err := router.Run(fmt.Sprintf(":%s", config.Web.Addr))
 	if err != nil {
